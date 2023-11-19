@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class PhoneNumber extends Model
 {
     use HasFactory;
+    protected $fillable = ['customer_id', 'phone_number'];
+
 
     public function customer(): BelongsTo
     {

@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('content')
@@ -12,6 +11,7 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Phone Numbers</th>
+                <th>Actions</th> <!-- New column for actions -->
             </tr>
             </thead>
             <tbody>
@@ -24,6 +24,17 @@
                         @foreach ($customer->phoneNumbers as $phoneNumber)
                             <div>{{ $phoneNumber->phone_number }}</div>
                         @endforeach
+                    </td>
+                    <td>
+                        <!-- Edit button (link) -->
+                        <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-info">Edit</a>
+
+                        <!-- Delete button (form) -->
+                        <form action="{{ route('customers.destroy', $customer->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this customer?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach

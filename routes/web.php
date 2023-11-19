@@ -13,11 +13,15 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// Redirect the root route to the customers index
+Route::redirect('/', '/customers');
 
-Route::get('/', function () {
-    return view('welcome');
+// Customer resource routes with grouped attributes
+Route::controller(CustomerController::class)->group(function () {
+    Route::get('/customers', 'index')->name('customers.index');
+    Route::get('/customers/create', 'create')->name('customers.create');
+    Route::post('/customers', 'store')->name('customers.store');
+    Route::get('/customers/{customer}/edit', 'edit')->name('customers.edit');
+    Route::put('/customers/{customer}', 'update')->name('customers.update');
+    Route::delete('/customers/{customer}', 'destroy')->name('customers.destroy');
 });
-
-Route::get('/customers', [CustomerController::class, 'index']);
-Route::get('/customers/create', [CustomerController::class, 'create']);
-Route::post('/customers', [CustomerController::class, 'store']);

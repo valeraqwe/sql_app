@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('content')
@@ -18,7 +17,7 @@
                 <label for="phoneNumbers" class="form-label">Phone Numbers</label>
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" name="phone_numbers[]">
-                    <button class="btn btn-secondary" type="button" id="addPhone">+</button>
+                    <button class="btn btn-secondary" type="button" onclick="addPhoneNumber()">+</button>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -26,13 +25,27 @@
     </div>
 
     <script>
-        document.getElementById('addPhone').addEventListener('click', function() {
+        function addPhoneNumber() {
             let container = document.getElementById('phoneNumbers');
-            let input = document.createElement('input');
-            input.type = 'text';
-            input.name = 'phone_numbers[]';
-            input.classList.add('form-control', 'mb-3');
-            container.appendChild(input);
-        });
+            let inputGroup = document.createElement('div');
+            inputGroup.classList.add('input-group', 'mb-3');
+
+            inputGroup.innerHTML = `
+                <input type="text" class="form-control" name="phone_numbers[]">
+                <button class="btn btn-danger" type="button" onclick="removePhoneNumber(this)">-</button>
+            `;
+
+            container.appendChild(inputGroup);
+        }
+
+        function removePhoneNumber(button) {
+            // Remove the input group for this phone number
+            button.closest('.input-group').remove();
+        }
     </script>
+    @push('scripts')
+        <script>
+            // Your JavaScript or jQuery code here
+        </script>
+    @endpush
 @endsection
